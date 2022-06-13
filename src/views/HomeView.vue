@@ -16,6 +16,7 @@ import IconPen from "../components/icons/IconPen.vue";
 import IconClose from "../components/icons/IconClose.vue";
 
 const showSidebar = ref(false);
+const showMenu = ref(false);
 
 const toggleCardForm = (cardID) => {
   for (const card of lists.value) {
@@ -184,7 +185,7 @@ const lists = ref([
               <template #leftIcon><IconFilter class="mr-2 text-lg" /></template>
               <template #default>Filter</template>
             </TheButton>
-            <TheButton>
+            <TheButton @click="showMenu = !showMenu">
               <template #leftIcon><IconMenu class="mr-2 text-2xl" /></template>
               <template #default>Show menu</template>
             </TheButton>
@@ -326,7 +327,7 @@ const lists = ref([
       <!-- menu sectio start here -->
       <div
         class="h-[100%] bg-[#3FA05A] transition-[width] duration-[.35s]"
-        :class="showSidebar ? 'w-[18rem]' : 'w-0'"
+        :class="showMenu ? 'w-[44rem]' : 'w-0'"
       >
         Menu here
       </div>
