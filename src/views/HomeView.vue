@@ -89,62 +89,122 @@ const newTask = ref({
 const lists = ref([
   {
     name: "Guidelines",
-    list: [{ title: "From guidelines", id: "1", showModal: true }],
+    list: [
+      {
+        title: "From guidelines",
+        id: "1",
+        showModal: false,
+        addDescription: false,
+      },
+    ],
     formIsOpen: false,
     id: 1,
   },
   {
     name: "Ideas",
-    list: [{ title: "From ideas", id: "2", showModal: false }],
+    list: [
+      { title: "From ideas", id: "2", showModal: false, addDescription: false },
+    ],
     formIsOpen: false,
     id: 2,
   },
   {
     name: "Research",
-    list: [{ title: "From Research", id: "3", showModal: false }],
+    list: [
+      {
+        title: "From Research",
+        id: "3",
+        showModal: false,
+        addDescription: false,
+      },
+    ],
     formIsOpen: false,
     id: 3,
   },
   {
     name: "Writing",
-    list: [{ title: "From Writing", id: "4", showModal: false }],
+    list: [
+      {
+        title: "From Writing",
+        id: "4",
+        showModal: false,
+        addDescription: false,
+      },
+    ],
     formIsOpen: false,
     showModal: false,
     id: 4,
   },
   {
     name: "Draft Received",
-    list: [{ title: "From draft received", id: "5", showModal: false }],
+    list: [
+      {
+        title: "From draft received",
+        id: "5",
+        showModal: false,
+        addDescription: false,
+      },
+    ],
     formIsOpen: false,
     id: 5,
   },
   {
     name: "Editing",
-    list: [{ title: "From editing", id: "6", showModal: false }],
+    list: [
+      {
+        title: "From editing",
+        id: "6",
+        showModal: false,
+        addDescription: false,
+      },
+    ],
     formIsOpen: false,
     id: 6,
   },
   {
     name: "Good to go",
-    list: [{ title: "From good to go", id: "7", showModal: false }],
+    list: [
+      {
+        title: "From good to go",
+        id: "7",
+        showModal: false,
+        addDescription: false,
+      },
+    ],
     formIsOpen: false,
     id: 7,
   },
   {
     name: "Ready to Publish",
-    list: [{ title: "From ready to publish", id: "8", showModal: false }],
+    list: [
+      {
+        title: "From ready to publish",
+        id: "8",
+        showModal: false,
+        addDescription: false,
+      },
+    ],
     formIsOpen: false,
     id: 8,
   },
   {
     name: "Published",
-    list: [{ title: "From published", id: "9", showModal: false }],
+    list: [
+      {
+        title: "From published",
+        id: "9",
+        showModal: false,
+        addDescription: false,
+      },
+    ],
     formIsOpen: false,
     id: 9,
   },
   {
     name: "Paid",
-    list: [{ title: "From paid", id: "10", showModal: false }],
+    list: [
+      { title: "From paid", id: "10", showModal: false, addDescription: false },
+    ],
     formIsOpen: false,
     id: 10,
   },
@@ -166,7 +226,7 @@ const lists = ref([
 
       <!-- content here -->
       <div
-        class="h-full grow bg-[#4BBF6B] relative space-y-4 flex flex-col overflow-hidden"
+        class="h-full grow bg-purple-900 relative space-y-4 flex flex-col overflow-hidden"
       >
         <!-- content navbar here -->
         <div
@@ -175,7 +235,7 @@ const lists = ref([
           <div
             @click="showSidebar = !showSidebar"
             title="Expand sidebar"
-            class="cursor-pointer mr-2 text-green-800 flex"
+            class="cursor-pointer mr-2 text-transparent/[0.5] hover:text-transparent/[0.3]"
           >
             <IconHamburger />
           </div>
@@ -186,7 +246,7 @@ const lists = ref([
               <template #rightIcon><IconDropdown /></template>
             </TheButton>
             <div
-              class="flex flex-wrap items-center whitespace-nowrap rounded px-2 transition-[background-color] capitalize cursor-pointer font-bold text-xl hover:bg-[#6FCC89] hover:brigtness-105 h-[35px]"
+              class="flex flex-wrap items-center whitespace-nowrap rounde d px-2 transition-[background-color] capitalize cursor-pointer font-bold text-xl bg-transparent hover:backdrop-brightness-[1.4] rounded hover:brigtness-105 h-[35px]"
             >
               <span>Kanban Template</span>
             </div>
@@ -234,283 +294,358 @@ const lists = ref([
         <!-- content navbar ends here -->
 
         <div
-          class="grow px-5 py-2 space-x-2 pb-12 overflow-x-scroll flex text-[15px] overflow-y-hidden"
+          class="grow px-5 py-2 pb-12 text-[15px] flex overflow-y-hidden overflow-x-scroll space-x-2"
         >
-          <div
-            v-for="list in lists"
-            :key="list.id"
-            class="bg-[#EBECF0] h-fit flex flex-col justify-between max-h-[97%] min-w-[300px] max-w-[300px] rounded p-2 space-y-2 overflow-hidden"
+          <draggable
+            v-model="lists"
+            item-key="id"
+            animation="300"
+            class="flex space-x-2 min-w-fit text-[15px] overflow-y-hidden"
           >
-            <div class="flex items-center font-semibold text-gray-700 pl-3">
-              <div
-                class="w-full overflow-wrap text-[15px] p-1 flex items-center break-all cursor-pointer outline-blue-600"
-                contentEditable="true"
-                spellcheck="false"
-                @keyup.enter="(e) => e.target.blur()"
-              >
-                {{ list.name }}
-              </div>
-              <div
-                class="hover:bg-gray-300 h-9 w-9 transition self-start duration-[0.2s] rounded flex items-center justify-center cursor-pointer"
-              >
-                <IconMenu class="h-full text-2xl text-gray-500" />
-              </div>
-            </div>
-            <!-- task list here-->
-            <div class="space-y-2 overflow-y-scroll scrollbar-hide">
-              <!-- draggable list here -->
-              <div class="overflow-y-scroll scrollbar-hide">
-                <draggable
-                  v-model="list.list"
-                  item-key="id"
-                  group="card"
-                  animation="300"
-                  class="space-y-2"
+            <template #item="{ element: list }">
+              <div class="">
+                <div
+                  class="bg-[#EBECF0] h-fit flex flex-col justify-between max-h-[97%] min-w-[300px] max-w-[300px] rounded p-2 space-y-2 overflow-hidden"
                 >
-                  <template #item="{ element }">
-                    <div>
-                      <div
-                        @click="openModal(element.id)"
-                        class="bg-white break-all group relative flex space-x-1 items-center drop-shadow hover:bg-gray-50 cursor-pointer text-gray-600 px-2 py-1 rounded"
+                  <div
+                    class="flex items-center font-semibold text-gray-700 pl-3"
+                  >
+                    <div
+                      class="w-full overflow-wrap text-[15px] p-1 flex items-center break-all cursor-pointer outline-blue-600"
+                      contentEditable="true"
+                      spellcheck="false"
+                      @keyup.enter="(e) => e.target.blur()"
+                    >
+                      {{ list.name }}
+                    </div>
+                    <div
+                      class="hover:bg-gray-300 h-9 w-9 transition self-start duration-[0.2s] rounded flex items-center justify-center cursor-pointer"
+                    >
+                      <IconMenu class="h-full text-2xl text-gray-500" />
+                    </div>
+                  </div>
+                  <!-- task list here-->
+                  <div class="space-y-2 overflow-y-scroll scrollbar-hide">
+                    <!-- draggable list here -->
+                    <div class="overflow-y-scroll scrollbar-hide">
+                      <draggable
+                        v-model="list.list"
+                        item-key="id"
+                        group="card"
+                        animation="300"
+                        class="space-y-2"
                       >
-                        <p class="grow break-word">
-                          {{ element.title }}
-                        </p>
-
-                        <div
-                          class="flex self-start group-hover:visible invisible items-center justify-center bg-gray-50 hover:bg-gray-300 rounded p-2"
-                        >
-                          <IconPen class="text-base text-gray-800" />
-                        </div>
-                      </div>
-                      <Modal
-                        v-if="element.showModal == true"
-                        @closeModal="closeModal(element.id)"
-                      >
-                        <div
-                          class="relative space-y-12 pt-4 px-2 text-gray-600"
-                        >
-                          <div class="flex justify-between">
-                            <div class="flex grow space-x-3 ml-4 font-semibold">
-                              <IconCard class="text-2xl" />
-                              <span
-                                contenteditable="true"
-                                class="w-full text-xl overflow-wrap break-all outline-blue-600 p-1"
-                                >{{ element.title }}</span
-                              >
-                            </div>
-                            <IconClose
-                              class="text-2xl cursor-pointer p-1 mr-3 rounded-full w-8 h-8 hover:bg-gray-300"
-                            />
-                          </div>
-
-                          <div
-                            class="px-4 flex flex-col md:flex-row md:space-x-4 space-y-8 md:space-y-0"
-                          >
-                            <!-- description and activity -->
+                        <template #item="{ element }">
+                          <div>
                             <div
-                              class="flex flex-col space-y-1 grow space-x-3 font-semibold"
+                              @click="openModal(element.id)"
+                              class="bg-white break-all group relative flex space-x-1 items-center drop-shadow hover:bg-gray-50 cursor-pointer text-gray-600 px-2 py-1 rounded"
                             >
-                              <!-- description -->
-                              <div class="flex grow space-x-3 mb-7">
-                                <IconCard class="text-2xl" />
-                                <div class="flex flex-col w-full space-y-3">
-                                  <span class="text-lg">Description</span>
+                              <p class="grow break-word">
+                                {{ element.title }}
+                              </p>
+
+                              <div
+                                class="flex self-start group-hover:visible invisible items-center justify-center bg-gray-50 hover:bg-gray-300 rounded p-2"
+                              >
+                                <IconPen class="text-base text-gray-800" />
+                              </div>
+                            </div>
+                            <Modal
+                              v-if="element.showModal == true"
+                              @closeModal="closeModal(element.id)"
+                            >
+                              <div
+                                class="relative space-y-12 pt-4 px-2 text-gray-600"
+                              >
+                                <div class="flex justify-between">
                                   <div
-                                    class="w-full h-[60px] font-normal rounded bg-gray-200 cursor-pointer hover:bg-gray-300 transition-bg px-4 p-2"
+                                    class="flex grow space-x-3 md:ml-4 font-semibold"
                                   >
-                                    Add a more detailed description...
+                                    <IconCard class="text-2xl" />
+                                    <span
+                                      contenteditable="true"
+                                      class="w-full text-xl overflow-wrap break-all outline-blue-600 p-1"
+                                      >{{ element.title }}</span
+                                    >
                                   </div>
-                                  <form
-                                    @submit.prevent="addTask(list.id)"
-                                    class="w-full font-normal text-gray-600 space-y-2"
+                                  <IconClose
+                                  @click="closeModal(element.id)"
+                                    class="text-2xl cursor-pointer p-1 mr-3 rounded-full w-8 h-8 hover:bg-gray-300"
+                                  />
+                                </div>
+
+                                <div
+                                  class="md:px-4 flex flex-col md:flex-row md:space-x-4 space-y-8 md:space-y-0"
+                                >
+                                  <!-- description and activity -->
+                                  <div
+                                    class="flex flex-col space-y-1 grow space-x-3 font-semibold"
                                   >
-                                    <textarea
-                                      v-model="newTask.title"
-                                      spellcheck="false"
-                                      placeholder="Add a more detailed description..."
-                                      class="w-full placeholder:text-gray-500 focus:outline-blue-600 placeholder:font-normal placeholder:text-base scrollbar-hide break-word resize-none overflow-wrap bg-white rounded-sm outline-none pb-6 p-2 h-[120px] px-4"
-                                    ></textarea>
-                                    <div class="flex items-center">
+                                    <!-- description -->
+                                    <div class="flex space-x-2 mb-7">
+                                      <IconCard class="text-2xl" />
                                       <div
-                                        class="flex items-center grow space-x-2"
+                                        class="flex flex-col w-full space-y-3"
                                       >
-                                        <button
-                                          class="outline-none rounded py-2 px-3 bg-[#0079BF] hover:brightness-90 text-white"
-                                        >
-                                          Save
-                                        </button>
+                                        <span class="text-lg">Description</span>
                                         <div
-                                          @click="toggleCardForm(list.id)"
-                                          class="cursor-pointer rounded py-2 px-3 hover:bg-gray-300"
+                                        v-if="!element.addDescription"
+                                        @click="element.addDescription = true"
+                                          class="w-full h-[60px] font-normal rounded bg-gray-200 cursor-pointer hover:bg-gray-300 transition-bg md:px-4 p-2"
                                         >
-                                          Cancel
+                                          Add a more detailed description...
+                                        </div>
+                                        <form
+                                        v-else
+                                          @submit.prevent=""
+                                          class="w-full font-normal text-gray-600 space-y-2"
+                                        >
+                                          <textarea
+                                            v-model="newTask.title"
+                                            spellcheck="false"
+                                            placeholder="Add a more detailed description..."
+                                            class="w-full placeholder:text-gray-500 focus:outline-blue-600 placeholder:font-normal placeholder:text-base scrollbar-hide break-word resize-none overflow-wrap bg-white rounded-sm outline-none pb-6 p-2 h-[120px] px-4"
+                                          ></textarea>
+                                          <div class="flex items-center">
+                                            <div
+                                              class="flex items-center grow space-x-2"
+                                            >
+                                              <button
+                                                class="outline-none rounded py-2 px-3 bg-[#0079BF] hover:brightness-90 text-white"
+                                              >
+                                                Save
+                                              </button>
+                                              <div
+                                                @click="
+                                                  element.addDescription = false
+                                                "
+                                                class="cursor-pointer rounded py-2 px-3 hover:bg-gray-300"
+                                              >
+                                                Cancel
+                                              </div>
+                                            </div>
+                                            <div
+                                              class="cursor-pointer rounded py-2 px-3 bg-gray-200 hover:bg-gray-300"
+                                            >
+                                              Formatting help
+                                            </div>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                    <!-- activity -->
+                                    <div class="flex space-x-3">
+                                      <IconCard class="text-2xl" />
+                                      <div
+                                        class="flex flex-col w-full space-y-3"
+                                      >
+                                        <div
+                                          class="flex justify-between items-center"
+                                        >
+                                          <span class="text-lg">Activity</span>
+                                          <div
+                                            class="cursor-pointer font-normal rounded py-2 px-3 bg-gray-200 hover:bg-gray-300"
+                                          >
+                                            Show details
+                                          </div>
                                         </div>
                                       </div>
+                                    </div>
+
+                                    <div class="flex space-x-2 pt-2">
                                       <div
-                                        class="cursor-pointer rounded py-2 px-3 bg-gray-200 hover:bg-gray-300"
+                                        class="rounded-full bg-blue-500 p-1 w-8 h-8 flex items-center justify-center text-white"
                                       >
-                                        Formatting help
+                                        JS
+                                      </div>
+                                      <form
+                                        @submit.prevent=""
+                                        class="w-full font-normal space-y-2 bg-white flex flex-col rounded drop-shadow"
+                                      >
+                                        <input
+                                          class="peer w-full p-1 outline-none rounded px-4 placeholder:font-normal placeholder:text-gray-600"
+                                          placeholder="Write a comment..."
+                                        />
+                                        <div
+                                          class="hidden items-center justify-between peer-focus:flex px-4 py-1"
+                                        >
+                                          <button
+                                            class="outline-none rounded py-1 px-3 bg-gray-200 hover:bg-gray-300"
+                                          >
+                                            Save
+                                          </button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+
+                                  <!-- add to card and actions -->
+                                  <div
+                                    class="flex space-y-8 flex-col h-auto md:space-y-14"
+                                  >
+                                    <div class="space-y-2 w-full">
+                                      <h3
+                                        class="font-semibold text-sm text-gray-500"
+                                      >
+                                        Add to card
+                                      </h3>
+                                      <div
+                                        class="md:space-y-2 grid grid-cols-2 w-full gap-2 gap-y-4 md:inline-block"
+                                      >
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Members</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Labels</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Checklist</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Dates</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Attackments</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer t text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Cover</span>
+                                        </div>
                                       </div>
                                     </div>
-                                  </form>
-                                </div>
-                              </div>
-                              <!-- activity -->
-                              <div class="flex grow space-x-3">
-                                <IconCard class="text-2xl" />
-                                <div class="flex flex-col w-full space-y-3">
-                                  <div
-                                    class="flex justify-between items-center"
-                                  >
-                                    <span class="text-lg">Activity</span>
-                                    <div
-                                      class="cursor-pointer font-normal rounded py-2 px-3 bg-gray-200 hover:bg-gray-300"
-                                    >
-                                      Show details
+                                    <div class="space-y-2 w-full">
+                                      <h3
+                                        class="font-semibold text-sm text-gray-500"
+                                      >
+                                        Actions
+                                      </h3>
+                                      <div
+                                        class="md:space-y-2 grid grid-cols-2 w-full gap-2 gap-y-4 md:inline-block"
+                                      >
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Move</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Copy</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Watch</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Make template</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />*
+                                          <span>Delete</span>
+                                        </div>
+                                        <div
+                                          class="bg-gray-200 space-x-3 cursor-pointer t text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 md:w-[180px]"
+                                        >
+                                          <IconBoard class="" />
+                                          <span>Share</span>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-
-                              <div class="flex space-x-2">
-                                <div
-                                  class="rounded-full bg-blue-500 p-1 w-8 h-8 flex items-center justify-center text-white"
-                                >
-                                  JS
-                                </div>
-                                <form
-                                  @submit.prevent=""
-                                  class="w-full font-normal space-y-2 bg-white flex flex-col rounded drop-shadow"
-                                >
-                                  <input
-                                    class="peer w-full p-1 outline-none rounded px-4 placeholder:font-normal placeholder:text-gray-600"
-                                    placeholder="Write a comment..."
-                                  />
-                                  <div
-                                    class="hidden items-center justify-between peer-focus:flex px-4 py-1"
-                                  >
-                                    <button
-                                      class="outline-none rounded py-1 px-3 bg-gray-200 hover:bg-gray-300"
-                                    >
-                                      Save
-                                    </button>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-
-                            <!-- add to card and actions -->
-                            <div class="flex md:flex-col h-fit">
-                              <div class="space-y-1">
-                                <h3 class="font-semibold text-sm text-gray-500">
-                                  Add to card
-                                </h3>
-                                <div class="md:space-y-2">
-                                  <div
-                                    class="bg-gray-200 space-x-3 cursor-pointer text-lg text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 w-[180px]"
-                                  >
-                                    <IconBoard class="" />
-                                    <span>Members</span>
-                                  </div>
-                                  <div
-                                    class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 w-[180px]"
-                                  >
-                                    <IconBoard class="" />
-                                    <span>Labels</span>
-                                  </div>
-                                  <div
-                                    class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 w-[180px]"
-                                  >
-                                    <IconBoard class="" />
-                                    <span>Checklist</span>
-                                  </div>
-                                  <div
-                                    class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 w-[180px]"
-                                  >
-                                    <IconBoard class="" />
-                                    <span>Dates</span>
-                                  </div>
-                                  <div
-                                    class="bg-gray-200 space-x-3 cursor-pointer text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 w-[180px]"
-                                  >
-                                    <IconBoard class="" />
-                                    <span>Attackments</span>
-                                  </div>
-                                  <div
-                                    class="bg-gray-200 space-x-3 cursor-pointer t text-gray-600 rounded flex px-3 p-1 items-center hover:bg-gray-300 w-[180px]"
-                                  >
-                                    <IconBoard class="" />
-                                    <span>Cover</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                            </Modal>
                           </div>
-                        </div>
-                      </Modal>
+                        </template>
+                      </draggable>
                     </div>
-                  </template>
-                </draggable>
-              </div>
-              <!-- draggable list ends here -->
+                    <!-- draggable list ends here -->
 
-              <!-- add a card here -->
-            </div>
-            <!-- New card form here -->
-            <div
-              v-if="list.formIsOpen == false"
-              class="flex w-full items-center cursor-pointer text-gray-500 py-1"
-            >
-              <div
-                @click="toggleCardForm(list.id)"
-                class="flex grow items-center space-x-2 px-4 py-1 rounded hover:bg-gray-300"
-              >
-                <IconPlus class="text-lg" />
-                <span>Add a card</span>
-              </div>
-              <div
-                class="flex items-center justify-center hover:bg-gray-300 rounded p-1"
-              >
-                <IconCard class="text-lg" />
-              </div>
-            </div>
-            <form
-              @submit.prevent="addTask(list.id)"
-              class="w-full text-gray-600 space-y-1"
-              v-else
-            >
-              <textarea
-                v-model="newTask.title"
-                spellcheck="false"
-                placeholder="Enter a title for this card..."
-                class="w-full scrollbar-hide break-word resize-none overflow-wrap bg-white drop-shadow rounded outline-none pb-6 p-2 h-auto"
-              ></textarea>
-              <div class="flex items-center">
-                <div class="flex items-center grow space-x-2">
-                  <button
-                    class="outline-none rounded py-2 px-3 bg-[#0079BF] hover:brightness-90 text-white font-semibold"
+                    <!-- add a card here -->
+                  </div>
+                  <!-- New card form here -->
+                  <div
+                    v-if="list.formIsOpen == false"
+                    class="flex w-full items-center cursor-pointer text-gray-500 py-1"
                   >
-                    Add card
-                  </button>
-                  <IconClose
-                    @click="toggleCardForm(list.id)"
-                    class="text-2xl cursor-pointer hover:text-gray-700"
-                  />
-                </div>
-                <div
-                  class="hover:bg-gray-300 h-9 w-9 transition duration-[0.2s] rounded flex items-center justify-center cursor-pointer"
-                >
-                  <IconMenu class="h-full text-2xl text-gray-500" />
+                    <div
+                      @click="toggleCardForm(list.id)"
+                      class="flex grow items-center space-x-2 px-4 py-1 rounded hover:bg-gray-300"
+                    >
+                      <IconPlus class="text-lg" />
+                      <span>Add a card</span>
+                    </div>
+                    <div
+                      class="flex items-center justify-center hover:bg-gray-300 rounded p-1"
+                    >
+                      <IconCard class="text-lg" />
+                    </div>
+                  </div>
+                  <form
+                    @submit.prevent="addTask(list.id)"
+                    class="w-full text-gray-600 space-y-1"
+                    v-else
+                  >
+                    <textarea
+                      v-model="newTask.title"
+                      spellcheck="false"
+                      placeholder="Enter a title for this card..."
+                      class="w-full scrollbar-hide break-word resize-none overflow-wrap bg-white drop-shadow rounded outline-none pb-6 p-2 h-auto"
+                    ></textarea>
+                    <div class="flex items-center">
+                      <div class="flex items-center grow space-x-2">
+                        <button
+                          class="outline-none rounded py-2 px-3 bg-[#0079BF] hover:brightness-90 text-white font-semibold"
+                        >
+                          Add card
+                        </button>
+                        <IconClose
+                          @click="toggleCardForm(list.id)"
+                          class="text-2xl cursor-pointer hover:text-gray-700"
+                        />
+                      </div>
+                      <div
+                        class="hover:bg-gray-300 h-9 w-9 transition duration-[0.2s] rounded flex items-center justify-center cursor-pointer"
+                      >
+                        <IconMenu class="h-full text-2xl text-gray-500" />
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
-            </form>
-          </div>
-          <!-- add a new list form -->
+            </template>
+          </draggable>
           <div
             v-if="!addList"
             @click="toggleAddList"
-            class="flex bg-transparent/[0.19] backdrop-brightness-[1.6] min-w-[300px] max-w-[300px] items-center space-x-2 px-4 py-1 rounded cursor-pointer h-[50px]"
+            class="flex bg-transparent/[0.19] backdrop-brightness-[1.7] hover:backdrop-brightness-[1.8] min-w-[300px] max-w-[300px] items-center space-x-2 px-4 py-1 rounded cursor-pointer h-[50px]"
           >
             <IconPlus class="text-lg" />
             <span>Add another list</span>
@@ -538,11 +673,10 @@ const lists = ref([
               </div>
             </div>
           </form>
-          <!-- add a new list form ends here -->
         </div>
       </div>
       <!-- content ends here -->
-
+      <!-- add a new list form -->
       <!-- menu sectio start here -->
       <div
         class="h-[100%] bg-[#3FA05A] transition-[width] duration-[.35s]"
