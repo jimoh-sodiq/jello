@@ -67,24 +67,34 @@ const toggleCardForm = (cardID) => {
   }
 };
 
-const addTask = (cardID) => {
-  if (newTask.value) {
-    for (const card of lists.value) {
-      if (card.id === cardID) {
-        card.list = [...card.list, newTask.value];
-      }
-      newTask.value = {
-        title: "",
-        id: ((Math.random() / 5) * 8) / 6 / 3 / 6 + "random",
-      };
-    }
+const newList = ref("");
+
+const addToList = () => {
+  let name = newList.value;
+  if (name) {
+    lists.value.push({ name: name, list: [], formIsOpen: false, id: name });
+    newList.value = "";
   }
 };
 
-const newTask = ref({
-  title: "",
-  id: ((Math.random() / 5) * 8) / 6 / 3 / 6 + "random",
-});
+const newTask = ref("");
+
+const addTask = (cardID) => {
+  let task = newTask.value;
+  if (task) {
+    for (const card of lists.value) {
+      if (card.id === cardID) {
+        card.list.push({
+          title: task,
+          id: task,
+          showModal: false,
+          addDescription: false,
+        });
+      }
+      newTask.value = "";
+    }
+  }
+};
 
 const lists = ref([
   {
@@ -226,7 +236,7 @@ const lists = ref([
 
       <!-- content here -->
       <div
-        class="h-full grow bg-purple-900 relative space-y-4 flex flex-col overflow-hidden"
+        class="h-full grow bg-[#4BBF6B] relative space-y-4 flex flex-col overflow-hidden"
       >
         <!-- content navbar here -->
         <div
@@ -246,8 +256,7 @@ const lists = ref([
               <template #rightIcon><IconDropdown /></template>
             </TheButton>
             <div
-              class="flex flex-wrap items-center whitespace-nowrap rounde d px-2 transition-[background-color] capitalize cursor-pointer font-bold text-xl bg-transparent hover:backdrop-brightness-[1.4] rounded hover:brigtness-105 h-[35px]"
-            >
+ class="flex flex-wrap items-center whitespace-nowrap rounded px-2 transition-[background-color] capitalize cursor-pointer font-bold text-xl hover:bg-[#6FCC89] hover:brigtness-105 h-[35px]"            >
               <span>Kanban Template</span>
             </div>
             <TheButton class="group hover:brightness-100"
@@ -370,7 +379,7 @@ const lists = ref([
                                     >
                                   </div>
                                   <IconClose
-                                  @click="closeModal(element.id)"
+                                    @click="closeModal(element.id)"
                                     class="text-2xl cursor-pointer p-1 mr-3 rounded-full w-8 h-8 hover:bg-gray-300"
                                   />
                                 </div>
@@ -390,14 +399,14 @@ const lists = ref([
                                       >
                                         <span class="text-lg">Description</span>
                                         <div
-                                        v-if="!element.addDescription"
-                                        @click="element.addDescription = true"
+                                          v-if="!element.addDescription"
+                                          @click="element.addDescription = true"
                                           class="w-full h-[60px] font-normal rounded bg-gray-200 cursor-pointer hover:bg-gray-300 transition-bg md:px-4 p-2"
                                         >
                                           Add a more detailed description...
                                         </div>
                                         <form
-                                        v-else
+                                          v-else
                                           @submit.prevent=""
                                           class="w-full font-normal text-gray-600 space-y-2"
                                         >
@@ -614,7 +623,7 @@ const lists = ref([
                     v-else
                   >
                     <textarea
-                      v-model="newTask.title"
+                      v-model="newTask"
                       spellcheck="false"
                       placeholder="Enter a title for this card..."
                       class="w-full scrollbar-hide break-word resize-none overflow-wrap bg-white drop-shadow rounded outline-none pb-6 p-2 h-auto"
@@ -651,10 +660,12 @@ const lists = ref([
             <span>Add another list</span>
           </div>
           <form
+            @submit.prevent="addToList()"
             v-else
             class="min-w-[300px] max-w-[300px] text-gray-500 space-y-2 p-2 rounded bg-[#EBECF0] h-fit"
           >
             <input
+              v-model="newList"
               spellcheck="false"
               placeholder="Enter a title for this list..."
               class="w-full break-all border-[2px] scrollbar-hide border-[#0079BF] overflow-wrap bg-white drop-shadow rounded outline-none p-2 h-auto"
@@ -692,7 +703,10 @@ const lists = ref([
 <style scoped>
 .sortable-ghost {
   background-color: rgb(209 213 219);
+  height: fit-content;
 }
-/* .sortable-drag {
-} */
+.sortable-drag {
+  height: fit-content;
+  
+}
 </style>
