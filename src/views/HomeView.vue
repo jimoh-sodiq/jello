@@ -256,7 +256,8 @@ const lists = ref([
               <template #rightIcon><IconDropdown /></template>
             </TheButton>
             <div
- class="flex flex-wrap items-center whitespace-nowrap rounded px-2 transition-[background-color] capitalize cursor-pointer font-bold text-xl hover:bg-[#6FCC89] hover:brigtness-105 h-[35px]"            >
+              class="flex flex-wrap items-center whitespace-nowrap rounded px-2 transition-[background-color] capitalize cursor-pointer font-bold text-xl hover:bg-[#6FCC89] hover:brigtness-105 h-[35px]"
+            >
               <span>Kanban Template</span>
             </div>
             <TheButton class="group hover:brightness-100"
@@ -654,7 +655,7 @@ const lists = ref([
           <div
             v-if="!addList"
             @click="toggleAddList"
-            class="flex bg-transparent/[0.19] backdrop-brightness-[1.7] hover:backdrop-brightness-[1.8] min-w-[300px] max-w-[300px] items-center space-x-2 px-4 py-1 rounded cursor-pointer h-[50px]"
+            class="flex bg-[#6FCC89] hover:brightness-105 transition-[brightness] min-w-[300px] max-w-[300px] items-center space-x-2 px-4 py-1 rounded cursor-pointer h-[50px]"
           >
             <IconPlus class="text-lg" />
             <span>Add another list</span>
@@ -702,11 +703,12 @@ const lists = ref([
 
 <style scoped>
 .sortable-ghost {
-  background-color: rgb(209 213 219);
+  background: rgb(209 213 219);
   height: fit-content;
+  opacity: 0.3;
 }
+
 .sortable-drag {
   height: fit-content;
-  
 }
 </style>
