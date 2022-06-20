@@ -311,6 +311,7 @@ const lists = ref([
             item-key="id"
             animation="300"
             class="flex space-x-2 min-w-fit text-[15px]"
+            fallbackTolerance="7"
           >
             <template #item="{ element: list }">
               <div class="overflow-y-hidden">
