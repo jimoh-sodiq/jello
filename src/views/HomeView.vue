@@ -344,6 +344,7 @@ const lists = ref([
                         group="card"
                         animation="300"
                         class="space-y-2"
+                        fallbackTolerance="7"
                       >
                         <template #item="{ element }">
                           <div>
