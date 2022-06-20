@@ -314,7 +314,7 @@ const lists = ref([
             fallbackTolerance="7"
           >
             <template #item="{ element: list }">
-              <div class="overflow-y-hidden">
+              <div class="overflow-y-hidden h-fit max-h-full">
                 <div
                   class="bg-[#EBECF0] flex flex-col justify-between max-h-[97%] min-w-[300px] max-w-[300px] rounded p-2 space-y-2 overflow-hidden"
                 >
