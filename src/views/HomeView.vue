@@ -228,7 +228,7 @@ const lists = ref([
       <!-- sidebar here -->
       <div
         class="h-[100%] bg-[#3FA05A] transition-[width] duration-[.35s]"
-        :class="showSidebar ? 'w-[44rem]' : 'w-0'"
+        :class="showSidebar ? 'w-[50vw]' : 'w-0'"
       >
         sidebar here
       </div>
@@ -239,9 +239,7 @@ const lists = ref([
         class="h-full grow bg-[#4BBF6B] relative space-y-4 flex flex-col overflow-hidden"
       >
         <!-- content navbar here -->
-        <div
-          class="w-full space-y-2 grid md:flex grid-col-4 md:flex-row flex-wrap items-center px-4"
-        >
+        <div class="w-full flex md:flex-row flex-wrap gap-y-1 items-center px-4 mt-2">
           <div
             @click="showSidebar = !showSidebar"
             title="Expand sidebar"
@@ -249,7 +247,7 @@ const lists = ref([
           >
             <IconHamburger />
           </div>
-          <div class="flex flex-wrap space-x-2 md:space-x-4 items-center mt-2">
+          <div class="flex flex-wrap gap-x-2 md:gap-x-4 gap-y-1 items-center">
             <TheButton>
               <template #leftIcon><IconBoard class="mr-2" /></template>
               <template #default>Board</template>
@@ -268,11 +266,11 @@ const lists = ref([
           <span class="mx-2 font-thin text-gray-300 hidden md:inline-block"
             >|</span
           >
-          <div class="flex flex-wrap items-center">
+          <div class="flex flex-wrap gap-2 gap-y-1 items-center">
             <TheButton>
               <template #default>Jello Workspace</template>
             </TheButton>
-            <span class="font-thin mx-2 text-gray-300 hidden md:inline-block"
+            <span class="font-thin text-gray-300 hidden md:inline-block"
               >|</span
             >
             <TheButton>
@@ -284,7 +282,7 @@ const lists = ref([
             >|</span
           >
           <div class="grow">js invite</div>
-          <div class="flex justify-end items-center space-x-2 grow">
+          <div class="flex flex-wrap justify-end items-center gap-2 grow">
             <TheButton>
               <template #leftIcon
                 ><IconThunderbolt class="mr-2 text-lg"
