@@ -310,12 +310,12 @@ const lists = ref([
             v-model="lists"
             item-key="id"
             animation="300"
-            class="flex space-x-2 min-w-fit text-[15px] overflow-y-hidden"
+            class="flex space-x-2 min-w-fit text-[15px]"
           >
             <template #item="{ element: list }">
-              <div class="">
+              <div class="overflow-y-hidden">
                 <div
-                  class="bg-[#EBECF0] h-fit flex flex-col justify-between max-h-[97%] min-w-[300px] max-w-[300px] rounded p-2 space-y-2 overflow-hidden"
+                  class="bg-[#EBECF0] flex flex-col justify-between max-h-[97%] min-w-[300px] max-w-[300px] rounded p-2 space-y-2 overflow-hidden"
                 >
                   <div
                     class="flex items-center font-semibold text-gray-700 pl-3"
@@ -335,9 +335,9 @@ const lists = ref([
                     </div>
                   </div>
                   <!-- task list here-->
-                  <div class="space-y-2 overflow-y-scroll scrollbar-hide">
+                  <div class="space-y-2 h-fit overflow-y-scroll scrollbar-hide">
                     <!-- draggable list here -->
-                    <div class="overflow-y-scroll scrollbar-hide">
+                    <div>
                       <draggable
                         v-model="list.list"
                         item-key="id"
